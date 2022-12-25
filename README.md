@@ -1,4 +1,4 @@
-# TAKHLEEL - more about products in Uzbek.
+# takhleel - more about products in Uzbek.
 
 An easy tool for knowing more about products without browsing tons of comments.
 
