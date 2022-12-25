@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="./images/TAKHLEEL LOGO WHITE.png" type="image/icon type">
+    <title>Takhleel</title>
+</head>
+
+<body background="./images/fon.png">
+
+    <img src="./images/TAKHLEEL LOGO WHITE.png" alt="Logo image" class="img-logo">
+
+    <div class="inp">
+        <div class="reason">
+            <h1 class="title">Mahsulot haqida ko'proq...</h1>
+        </div>
+        <form>
+            <input type="text" id="data-input" name="link" required  placeholder="Havolani kiriting" class="input-link">
+            <button onclick="analyze()" type="button" class="btn">Tahlil qilish</button>
+        </form>
+    </div>
+
+</body>
+
+
+<script>
+    var xhr = null;
+    getXmlHttpRequestObject = function () {
+        if (!xhr) {
+            xhr = new XMLHttpRequest();
+        }
+        return xhr;
+    };
+
+    function sendDataCallback() {
+        if (xhr.readyState == 4 && xhr.status == 201) {
+            console.log("Data creation response received!");
+            getDate();
+            dataDiv = document.getElementById('sent-data-container');
+            dataDiv.innerHTML = xhr.responseText;
+        }
+    }
+
+
+    async function analyze(videoLink) {
+        dataToSend = document.getElementById('data-input').value;
+        if (!dataToSend) {
+            console.log("Data is empty.");
+            return;
+        }
+        console.log("Sending data: " + dataToSend);
+        const response = await fetch("http://localhost:5500/analyze", {
+            method: "POST",
+            body: JSON.stringify({"link": dataToSend}),
+        });
+        const responseData = await response.json();
+        return responseData
+    }
+</script>
+
+<style scoped>
+
+body {
+  background-size: 100%;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+  
+.reason{
+    text-align: start;
+    text-decoration: none;
+    color: white;
+}
+.inp{
+    padding-top: 250px;
+    padding-left: 100px;
+}
+.input-link{
+    width: 40%;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+}
+.btn{
+    background-color: #5272ff;
+    border: none;
+    color: white;
+    padding: 10px 25px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.img-logo{
+    padding-left: 50px;
+    padding-top: auto;
+    width: 10%;
+    height: 10%;
+}
+</style>
+
+</html>
